@@ -1,0 +1,24 @@
+Rans-AV-Services/
+├── index.html           # Home Page
+├── about.html           # About Us Page
+├── contact.html         # Contact Page
+├── equipment.html       # Equipment Page
+├── style.css            # All Styling
+├── script.js            # Header/Footer JavaScript
+├── equipment-data.js    # Equipment Database
+└── images/
+    ├── logo.png
+    ├── hero.jpeg
+    ├── mum.jpeg
+    ├── hyd.jpeg
+    ├── blr.jpg
+    ├── chenn.jpeg
+    ├── service-delivery.jpg
+    ├── service-support.jpg
+    ├── team.jpeg
+    ├── led_1.jpeg       # Equipment images
+    ├── led_2.jpeg
+    ├── speaker_1.jpeg
+    ├── speaker_2.jpeg
+    ├── projector_1.jpeg
+    ├── projector_2.jpeg
