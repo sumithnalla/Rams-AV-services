@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipment Rental | Ram's Audio Visual Services</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <style>
+        /* Additional styles specific to equipment page */
+        .category-filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 12px 25px;
+            background: #f5f5f5;
+            border: 2px solid #e0e0e0;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .filter-btn:hover {
+            background: #e8eaf6;
+            border-color: #1a237e;
+            color: #1a237e;
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            color: white;
+            border-color: #1a237e;
+        }
+        
+        .filter-btn i {
+            font-size: 1.1rem;
+        }
+        
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .equipment-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .equipment-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .equipment-image {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .equipment-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .equipment-card:hover .equipment-image img {
+            transform: scale(1.05);
+        }
+        
+        .equipment-category {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(26,35,126,0.9);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .equipment-content {
+            padding: 25px;
+        }
+        
+        .equipment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .equipment-title {
+            font-size: 1.4rem;
+            color: #1a237e;
+            margin: 0;
+        }
+        
+        .equipment-price {
+            background: linear-gradient(135deg, #ff4081 0%, #f50057 100%);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .equipment-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        .specs-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        
+        .specs-list li {
+            padding: 8px 0;
+            color: #555;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .specs-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .specs-list i {
+            color: #4caf50;
+            font-size: 0.8rem;
+        }
+        
+        .features-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+        
+        .feature-tag {
+            background: #f0f7ff;
+            color: #1a237e;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid #e3f2fd;
+        }
+        
+        .equipment-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .enquire-btn, .details-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .enquire-btn {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            color: white;
+        }
+        
+        .enquire-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(26,35,126,0.3);
+        }
+        
+        .details-btn {
+            background: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        
+        .details-btn:hover {
+            background: #e0e0e0;
+            transform: translateY(-3px);
+        }
+        
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .no-results i {
+            font-size: 4rem;
+            color: #e0e0e0;
+            margin-bottom: 20px;
+        }
+        
+        .no-results h3 {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .no-results p {
+            color: #999;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .rental-info {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e8eaf6 100%);
+            border-radius: 15px;
+            padding: 40px;
+            margin-top: 40px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .info-card {
+            text-align: center;
+        }
+        
+        .info-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 auto 20px;
+        }
+        
+        .info-card h3 {
+            color: #1a237e;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .info-card p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header will be loaded via JavaScript -->
+    <div id="header"></div>
+
+    <!-- Equipment Hero Section -->
+    <section class="equipment-hero-section">
+        <div class="container">
+            <div class="equipment-hero-content">
+                <h1 class="page-title">Premium AV Equipment Rental</h1>
+                <p class="page-subtitle">High-quality audio-visual equipment for events across India</p>
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a> <i class="fas fa-chevron-right"></i> 
+                    <span>Equipment</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Equipment Catalog Section -->
+    <section class="equipment-catalog">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Equipment Catalog</h2>
+                <p class="section-subtitle">Browse our premium collection of audio-visual equipment available for rent</p>
+            </div>
+            
+            <!-- Category Filters -->
+            <div class="category-filters">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-th-large"></i> All Equipment
+                </button>
+                <button class="filter-btn" data-filter="led">
+                    <i class="fas fa-tv"></i> LED Screens
+                </button>
+                <button class="filter-btn" data-filter="audio">
+                    <i class="fas fa-volume-up"></i> Audio Systems
+                </button>
+                <button class="filter-btn" data-filter="projector">
+                    <i class="fas fa-film"></i> Projectors
+                </button>
+            </div>
+            
+            <!-- Equipment Grid (Will be populated by JavaScript) -->
+            <div class="equipment-grid" id="equipmentGrid">
+                <!-- Equipment cards will be dynamically inserted here -->
+                <div class="no-results">
+                    <i class="fas fa-search"></i>
+                    <h3>Loading Equipment...</h3>
+                    <p>Please wait while we load our premium equipment collection.</p>
+                </div>
+            </div>
+            
+            <!-- Rental Information -->
+            <div class="rental-info">
+                <div class="section-header">
+                    <h2>Rental Information</h2>
+                    <p class="section-subtitle">Everything you need to know about renting from us</p>
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <h3>Booking Process</h3>
+                        <p>Reserve equipment online or call us. We require 50% advance payment to confirm your booking.</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <h3>Delivery & Setup</h3>
+                        <p>We deliver, install, and test all equipment at your venue. Delivery charges apply based on location.</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Safety Deposit</h3>
+                        <p>A refundable security deposit is required. It's fully refunded after equipment return in good condition.</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3>Technical Support</h3>
+                        <p>Our technicians provide on-site support throughout your event at no additional cost.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer will be loaded via JavaScript -->
+    <div id="footer"></div>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Privacy Policy</h2>
+            <div class="modal-body">
+                <!-- Same privacy policy content -->
+                <p><strong>Last Updated: March 2024</strong></p>
+                <!-- Include privacy policy text -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Equipment Details Modal -->
+    <div id="equipmentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="modalContent">
+                <!-- Equipment details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="equipment-data.js"></script>
+    <script>
+        // Equipment Page JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            loadEquipment();
+            setupFilterButtons();
+            setupEquipmentModals();
+        });
+
+        // Load equipment from equipment-data.js
+        function loadEquipment() {
+            const equipmentGrid = document.getElementById('equipmentGrid');
+            
+            // Clear loading message
+            equipmentGrid.innerHTML = '';
+            
+            // Create equipment cards
+            equipmentData.forEach(equipment => {
+                const card = createEquipmentCard(equipment);
+                equipmentGrid.appendChild(card);
+            });
+        }
+
+        // Create HTML for equipment card
+        function createEquipmentCard(equipment) {
+            const card = document.createElement('div');
+            card.className = `equipment-card ${equipment.category}`;
+            card.setAttribute('data-category', equipment.category);
+            
+            // Create features tags HTML
+            const featuresHTML = equipment.features.map(feature => 
+                `<span class="feature-tag">${feature}</span>`
+            ).join('');
+            
+            // Create specs list HTML
+            const specsHTML = equipment.specs.map(spec => 
+                `<li><i class="fas fa-check"></i> ${spec}</li>`
+            ).join('');
+            
+            card.innerHTML = `
+                <div class="equipment-image">
+                    <img src="images/${equipment.image}" alt="${equipment.name}" onerror="this.src='images/service-support.jpg'">
+                    <div class="equipment-category">
+                        ${equipment.category === 'led' ? 'LED Screen' : 
+                          equipment.category === 'audio' ? 'Audio System' : 'Projector'}
+                    </div>
+                </div>
+                <div class="equipment-content">
+                    <div class="equipment-header">
+                        <h3 class="equipment-title">${equipment.name}</h3>
+                        <div class="equipment-price">${equipment.price}</div>
+                    </div>
+                    <p class="equipment-description">${equipment.description}</p>
+                    
+                    <ul class="specs-list">
+                        ${specsHTML}
+                    </ul>
+                    
+                    <div class="features-tags">
+                        ${featuresHTML}
+                    </div>
+                    
+                    <div class="equipment-actions">
+                        <a href="contact.html" class="enquire-btn">
+                            <i class="fas fa-calendar-alt"></i> Enquire Now
+                        </a>
+                        <button class="details-btn view-details" data-id="${equipment.id}">
+                            <i class="fas fa-info-circle"></i> View Details
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // Setup filter buttons
+        function setupFilterButtons() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const equipmentCards = document.querySelectorAll('.equipment-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    const filter = button.getAttribute('data-filter');
+                    
+                    // Filter equipment cards
+                    equipmentCards.forEach(card => {
+                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                    
+                    // Show no results message if needed
+                    const visibleCards = Array.from(equipmentCards).filter(card => 
+                        card.style.display !== 'none'
+                    );
+                    
+                    const equipmentGrid = document.getElementById('equipmentGrid');
+                    const noResults = equipmentGrid.querySelector('.no-results');
+                    
+                    if (visibleCards.length === 0) {
+                        if (!noResults) {
+                            const noResultsHTML = `
+                                <div class="no-results">
+                                    <i class="fas fa-search"></i>
+                                    <h3>No Equipment Found</h3>
+                                    <p>We don't have any equipment in this category at the moment. Please check other categories or contact us for custom requirements.</p>
+                                </div>
+                            `;
+                            equipmentGrid.innerHTML = noResultsHTML;
+                        }
+                    } else if (noResults) {
+                        noResults.remove();
+                    }
+                });
+            });
+        }
+
+        // Setup equipment detail modals
+        function setupEquipmentModals() {
+            const modal = document.getElementById('equipmentModal');
+            const modalContent = document.getElementById('modalContent');
+            
+            // View details buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('view-details') || 
+                    e.target.closest('.view-details')) {
+                    const button = e.target.classList.contains('view-details') ? 
+                                  e.target : e.target.closest('.view-details');
+                    const equipmentId = parseInt(button.getAttribute('data-id'));
+                    const equipment = equipmentData.find(item => item.id === equipmentId);
+                    
+                    if (equipment) {
+                        showEquipmentModal(equipment);
+                    }
+                }
+            });
+            
+            // Close modal
+            const closeBtn = modal.querySelector('.close-modal');
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Close when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+
+        // Show equipment details in modal
+        function showEquipmentModal(equipment) {
+            const modal = document.getElementById('equipmentModal');
+            const modalContent = document.getElementById('modalContent');
+            
+            // Create modal content
+            const categoryName = equipment.category === 'led' ? 'LED Screen' : 
+                               equipment.category === 'audio' ? 'Audio System' : 'Projector';
+            
+            const specsHTML = equipment.specs.map(spec => 
+                `<li><i class="fas fa-check-circle"></i> ${spec}</li>`
+            ).join('');
+            
+            const featuresHTML = equipment.features.map(feature => 
+                `<span class="feature-tag">${feature}</span>`
+            ).join('');
+            
+            modalContent.innerHTML = `
+                <div class="modal-equipment-details">
+                    <div class="modal-header">
+                        <h2>${equipment.name}</h2>
+                        <div class="modal-price">${equipment.price}</div>
+                    </div>
+                    
+                    <div class="modal-body">
+                        <div class="modal-image">
+                            <img src="images/${equipment.image}" alt="${equipment.name}" onerror="this.src='images/service-support.jpg'">
+                        </div>
+                        
+                        <div class="modal-info">
+                            <div class="info-section">
+                                <h3><i class="fas fa-info-circle"></i> Description</h3>
+                                <p>${equipment.description}</p>
+                            </div>
+                            
+                            <div class="info-section">
+                                <h3><i class="fas fa-cogs"></i> Specifications</h3>
+                                <ul class="modal-specs">
+                                    ${specsHTML}
+                                </ul>
+                            </div>
+                            
+                            <div class="info-section">
+                                <h3><i class="fas fa-star"></i> Key Features</h3>
+                                <div class="modal-features">
+                                    ${featuresHTML}
+                                </div>
+                            </div>
+                            
+                            <div class="info-section">
+                                <h3><i class="fas fa-tags"></i> Category</h3>
+                                <p>${categoryName}</p>
+                            </div>
+                            
+                            <div class="modal-actions">
+                                <a href="contact.html?equipment=${encodeURIComponent(equipment.name)}" class="btn btn-primary">
+                                    <i class="fas fa-calendar-alt"></i> Book This Equipment
+                                </a>
+                                <a href="tel:+912267891234" class="btn btn-secondary">
+                                    <i class="fas fa-phone"></i> Call to Enquire
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Add modal styles
+        const modalStyles = document.createElement('style');
+        modalStyles.textContent = `
+            .modal-equipment-details {
+                padding: 20px;
+            }
+            
+            .modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 30px;
+                padding-bottom: 20px;
+                border-bottom: 2px solid #f0f0f0;
+            }
+            
+            .modal-header h2 {
+                color: #1a237e;
+                margin: 0;
+                font-size: 1.8rem;
+            }
+            
+            .modal-price {
+                background: linear-gradient(135deg, #ff4081 0%, #f50057 100%);
+                color: white;
+                padding: 10px 20px;
+                border-radius: 25px;
+                font-weight: 700;
+                font-size: 1.2rem;
+            }
+            
+            .modal-body {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+            
+            .modal-image {
+                border-radius: 10px;
+                overflow: hidden;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+            
+            .modal-image img {
+                width: 100%;
+                height: 300px;
+                object-fit: cover;
+                display: block;
+            }
+            
+            .info-section {
+                margin-bottom: 25px;
+            }
+            
+            .info-section h3 {
+                color: #1a237e;
+                margin-bottom: 15px;
+                font-size: 1.2rem;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .info-section h3 i {
+                color: #ff4081;
+            }
+            
+            .info-section p {
+                color: #555;
+                line-height: 1.6;
+            }
+            
+            .modal-specs {
+                list-style: none;
+                padding: 0;
+            }
+            
+            .modal-specs li {
+                padding: 10px 0;
+                color: #555;
+                border-bottom: 1px solid #f0f0f0;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .modal-specs li:last-child {
+                border-bottom: none;
+            }
+            
+            .modal-specs i {
+                color: #4caf50;
+            }
+            
+            .modal-features {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .modal-features .feature-tag {
+                background: #e8eaf6;
+                color: #1a237e;
+                padding: 8px 15px;
+                border-radius: 20px;
+                font-size: 0.9rem;
+            }
+            
+            .modal-actions {
+                display: flex;
+                gap: 15px;
+                margin-top: 30px;
+            }
+            
+            .modal-actions .btn {
+                flex: 1;
+                padding: 15px;
+            }
+            
+            @media (max-width: 768px) {
+                .modal-body {
+                    grid-template-columns: 1fr;
+                }
+                
+                .modal-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 15px;
+                }
+                
+                .modal-actions {
+                    flex-direction: column;
+                }
+            }
+        `;
+        document.head.appendChild(modalStyles);
+    </script>
+</body>
+</html>
