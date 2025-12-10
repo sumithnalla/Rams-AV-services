@@ -27,6 +27,7 @@ function loadHeader() {
                         <a href="equipment.html" class="nav-link">Equipment</a>
                         <a href="about.html" class="nav-link">About Us</a>
                         <a href="contact.html" class="nav-link">Contact</a>
+                        <a href="privacy.html" class="nav-link">Privacy Policy</a>
                     </nav>
                 </div>
             </div>
@@ -68,6 +69,7 @@ function loadFooter() {
                             <li><a href="equipment.html"><i class="fas fa-chevron-right"></i> Equipment Catalog</a></li>
                             <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Company</a></li>
                             <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                            <li><a href="privacy.html"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
                         </ul>
                     </div>
                     
@@ -95,8 +97,7 @@ function loadFooter() {
                 </div>
                 
                 <div class="footer-bottom">
-                    <p>&copy; 2024 Ram's Audio Visual Services. All Rights Reserved. | 
-                    <span class="privacy-link" id="openPrivacy">Privacy Policy</span></p>
+                    <p>&copy; 2024 Ram's Audio Visual Services. All Rights Reserved.</p>
                 </div>
             </div>
         </footer>
